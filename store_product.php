@@ -1,5 +1,5 @@
 <?php
-
+require "vendor/autoload.php";
 ?>
 
 <!doctype html>
@@ -14,6 +14,7 @@
 </head>
 <body>
 <?php require_once __DIR__ . '/components/header.php'?>
+<?php use app\dto\CategoryDto; $categories = CategoryDto::selectAll()?>
 <div class="container">
     <form action="core/product/store.php" method="post" enctype="multipart/form-data">
         <div class="form-row">
@@ -34,6 +35,20 @@
             <div class="form-group col-md-6">
                 <label for="inputCity">Image</label>
                 <input type="file" class="form-control" name="image">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="category_id">
+                    <?php
+                    foreach ($categories as $category) {
+                        ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['name'] ?>"</option>
+                        <?php
+                    }
+                    ?>
+                </select>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Push</button>
